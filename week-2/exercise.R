@@ -9,7 +9,8 @@ my_vector <- c(my_num, initials)
 vector_sum <- sum(my_vector)
 
 # Describe why this doesn't work: 
-# 
+# The sum function adds all the values, but one of the values given is a
+#string and the other is a number, and they can't be added together
 
 install.packages("stringr")
 
@@ -18,12 +19,12 @@ my_line <- "Hey, hey, this is the library"
 print(str_length(my_line))
 
 # Describe why this doesn't work: 
-# 
+# You need to add the line "library(stringr)" to access that library
 
 said_the_famous <- paste(my_line, " - ", initial)
 
 # Describe why this doesn't work: 
-# 
+# The variable "initial" should be "initials"
 
 
 ## Part 2 - Vector and function practice
