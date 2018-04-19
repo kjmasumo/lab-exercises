@@ -4,7 +4,7 @@ library(dplyr)
 
 # Read in the NBA team data of the 2016-2017 season from the data directory  
 # into a variable called `team.data` using `read.csv`
-
+nba <- read.csv("data/teams.csv", stringsAsFactors = F)
 
 # The data.frame team.data should now be accessible to you. 
 # View it, and get some basic information about the number of rows/columns. 
@@ -14,42 +14,49 @@ library(dplyr)
 
 
 # Add a column that gives the turnovers to steals ratio (TOV / STL) for each team
-
+nba <- mutate(nba, steals_ratio = TOV / STL)
 
 
 # Sort the teams from lowest turnover/steal ratio to highest
-
+nba <- arrange(nba, steals_ratio)
 
 # Get the team that had the highest Total Rebounds (TRB) only with the columns 
 # Team and TRB  *using one line of code*
-
+rebounds <- select(nba, Team, TRB)
 
 # Print only the name of the team that had the highest total rebounds
 # (that also happens to be the greatest team of all time)
-
-
+most_rebounds <- filter(nba, TRB == max(TRB)) %>% select(Team, TRB)
+highest_rebounds <- rebounds[rebounds$TRB == max(rebounds$TRB), "Team"]
+highest_rebounds
 
 ## Let's change gears!
 
 # Read in the Pokemon data from the data directory  
 # into a variable called `pokemon` using `read.csv`. Remember to not read strings in as factors.
-
+pokemon <- read.csv("data/pokemon.csv", stringsAsFactors = F)
 # First, View() the data set to see what info you have to work with 
-
+View(pokemon)
 
 # Find all the Pokemon that are "Water" Type 1 (or your favorite)
 # Save those rows into a variable called `water.pkm`
-
+water.pkm <- filter(pokemon, Type.1 == "Water")
 
 # Group the pokemon by Type 2 and save into a descriptive variable.
-
+water_subtypes <- group_by(water.pkm, Type.2)
+  
 # View your new variable -- did it affect anything?
-
+#Nope
 
 
 # Use summarize() to figure out what the mean (average) speed is for 
 # each different type in type 2 and what the maximum HP (health point) value is
 # within each group.
+summaries <- summarize(
+  water_subtypes,
+  average_speed = mean(Speed),
+  max_hp = max(HP)
+)
 
 # New pokemon are released in generations. Aggregate the data on generations
 # using summarize() to look at the minimum and maximum attack and defense values
